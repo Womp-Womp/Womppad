@@ -1,5 +1,4 @@
 # src/theme_manager.py
-
 from PyQt6.QtWidgets import QFileDialog, QMessageBox
 from PyQt6.QtCore import QFile, QTextStream
 

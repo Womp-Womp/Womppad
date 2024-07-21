@@ -11,6 +11,7 @@ class MenuBar(QMenuBar):
 
     def init_ui(self):
         self.create_file_menu()
+        self.create_edit_menu()
         self.create_themes_menu()
 
     def create_file_menu(self):
@@ -36,6 +37,15 @@ class MenuBar(QMenuBar):
         exit_action.setShortcut('Ctrl+Q')
         exit_action.triggered.connect(self.parent.close)
         file_menu.addAction(exit_action)
+
+    def create_edit_menu(self):
+        edit_menu = QMenu("Edit", self)
+        self.addMenu(edit_menu)
+
+        search_replace_action = QAction('Search and Replace', self)
+        search_replace_action.setShortcut('Ctrl+F')
+        search_replace_action.triggered.connect(self.show_search_replace_dialog)
+        edit_menu.addAction(search_replace_action)
 
     def create_themes_menu(self):
         themes_menu = QMenu("Themes", self)
@@ -64,3 +74,7 @@ class MenuBar(QMenuBar):
         if filename:
             with open(filename, 'w') as file:
                 file.write(self.parent.text_editor.toPlainText())
+
+    def show_search_replace_dialog(self):
+        if hasattr(self.parent, 'text_editor'):
+            self.parent.text_editor.show_search_replace_dialog()

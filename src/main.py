@@ -1,6 +1,10 @@
+# src/main.py
+import os
+os.environ['QT_QPA_PLATFORM'] = 'xcb'
+
 import sys
 from PyQt6.QtWidgets import QApplication
-from main_window import WompPad
+from src.main_window import WompPad
 
 def main():
     app = QApplication(sys.argv)
