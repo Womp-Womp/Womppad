@@ -14,6 +14,7 @@ class TextEditor(QTextEdit):
         self.search_dialog = None
         self.last_search_position = 0
         self.current_match = None
+        self.file_path = None  # Add this line
 
     def init_ui(self):
         self.setFontFamily("Courier")
@@ -41,6 +42,22 @@ class TextEditor(QTextEdit):
                     color: #FFFFFF;
                 }
             """)
+
+    def open_file(self):
+        filename, _ = QFileDialog.getOpenFileName(self.parent, "Open File", "", "Text Files (*.txt);;All Files (*)")
+        if filename:
+            with open(filename, 'r') as file:
+                # Assuming self.parent.text_editor has a method to get the current tab's text editor widget
+                current_text_editor = self.parent.text_editor.get_current_tab_text_editor()
+                current_text_editor.setText(file.read())
+
+    def save_file(self):
+        filename, _ = QFileDialog.getSaveFileName(self.parent, "Save File", "", "Text Files (*.txt);;All Files (*)")
+        if filename:
+            with open(filename, 'w') as file:
+                # Assuming self.parent.text_editor has a method to get the current tab's text editor widget
+                current_text_editor = self.parent.text_editor.get_current_tab_text_editor()
+                file.write(current_text_editor.toPlainText())
 
     def show_search_replace_dialog(self):
         self.log("show_search_replace_dialog called")
